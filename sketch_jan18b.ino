@@ -1,9 +1,9 @@
 #include <ESP8266WiFi.h>
-int sensor = A0;
+int sensor = A0;// moisture sensor 
 int value;
-String apiKey = "L1G3MHAKSB35N9CE";
-const char* ssid = "101";
-const char* password = "ilelio@101";
+String apiKey = "write key";
+const char* ssid = "wifi name";
+const char* password = "wifi password";
 const char* server = "api.thingspeak.com";
  
 
@@ -36,12 +36,12 @@ Serial.println("WiFi connected");
 void loop() 
 {
 value = analogRead(sensor);
-value = constrain(value, 400, 1023);
-value = map(value, 400, 1023, 100, 0);
+value = constrain(value, 400, 1023); // keep the range 400 to 1023
+value = map(value, 400, 1023, 100, 0); // mapping the rrange to 0-100
 if (client.connect(server,80)) {
 String postStr = apiKey;
 postStr +="&field1=";
-postStr += String(value);
+postStr += String(value);// add the value to send to things peak
 postStr += "\r\n\r\n";
  
 client.print("POST /update HTTP/1.1\n");
